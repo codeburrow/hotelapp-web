@@ -52,6 +52,7 @@ class Router
     {
         $found = 0;
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); //get the url
+        $path = urldecode($path); //if unicode, decode percent-encoding
 
         /**
          * If last char in URL is '/' redirect without it
