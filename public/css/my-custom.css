@@ -1,0 +1,27 @@
+@-ms-viewport{
+    width: extend-to-zoom;
+    zoom: 1.0;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background-color: #607d8b;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.nav-wrapper .brand-logo {
+    padding-left: 30px;
+}
+
+nav ul a {
+    font-size: 1.3rem;
+}
+
+.margin10 {
+    margin: 10px;
+}
