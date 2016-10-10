@@ -117,7 +117,7 @@ class MainController extends Controller
             $local_cert = __DIR__ . "/../../HotelAppCodeBurrow.pem";
         } else {
             $certificate = file_get_contents(urlencode(getenv("PEM")));
-            var_dump(getenv("PEM"));
+            var_dump(urlencode(getenv("PEM")));
 //            $certificate = file_get_contents(__DIR__ . "/../../HotelAppCodeBurrow.pem");
             var_dump($certificate);
             $tmpfname = tempnam("/", "cer");
@@ -130,11 +130,9 @@ class MainController extends Controller
 
         // Put your device token here (without spaces):
         $deviceToken = getenv('LUT_DEVICE_TOKEN');
-        var_dump($deviceToken);
 
         // Put your private key's passphrase here:
         $passphrase = getenv('PASSPHRASE');
-        var_dump($passphrase);
 
         $message = "Not_3";
         $url = "http://www.w3schools.com/w3css/w3css_colors.asp";
