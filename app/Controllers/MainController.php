@@ -117,7 +117,7 @@ class MainController extends Controller
         if ($GLOBALS['environment']=="dev"){
             $certificate = __DIR__ . "/../../HotelAppCodeBurrow.pem";
         }
-
+        var_dump($certificate);
         // Put your device token here (without spaces):
         $deviceToken = getenv('LUT_DEVICE_TOKEN');
 
