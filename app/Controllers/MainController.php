@@ -113,11 +113,15 @@ class MainController extends Controller
 
     public function push()
     {
-        $certificate = getenv('PEM');
         if ($GLOBALS['environment']=="dev"){
             $certificate = __DIR__ . "/../../HotelAppCodeBurrow.pem";
+        } else {
+            $certificate = getenv('PEM');
+            $temp_cert = tmpfile(); //create temp file
+            fwrite($temp_cert, $certificate); //copy to temp_cert the certificate
+            fseek($temp_cert, 0); //return pointer to the beginning of file
         }
-        var_dump($certificate);
+
         // Put your device token here (without spaces):
         $deviceToken = getenv('LUT_DEVICE_TOKEN');
 
@@ -167,9 +171,9 @@ class MainController extends Controller
         else
             echo 'Message successfully delivered' . PHP_EOL;
 
-// Close the connection to the server
-        fclose($fp);
+        fclose($fp); //Close the connection to the server
 
+        fclose($temp_cert); //Remove file $temp_cert
     }
 
 }
