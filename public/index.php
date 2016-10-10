@@ -6,8 +6,8 @@ use HotelApp\Controllers;
 use HotelApp\Router;
 
 /** Load .env variables in development environment **/
-//$dotenv = new Dotenv\Dotenv(__DIR__ . '/../app/');
-//$dotenv->load();
+$dotenv = new Dotenv\Dotenv(__DIR__ . '/../app/');
+$dotenv->load();
 
 $router = new Router\Router();
 
@@ -20,6 +20,7 @@ $router->get('/logout', 'MainController', 'logout');
 $router->get('/register', 'MainController', 'register');
 $router->get('/contact', 'MainController', 'contact');
 $router->get('/about', 'MainController', 'about');
+$router->get('/push', 'MainController', 'push');
 
 //Admin
 $router->get('/admin/dashboard', 'AdminController', 'dashboard');
