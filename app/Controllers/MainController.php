@@ -173,7 +173,10 @@ class MainController extends Controller
             echo 'Message successfully delivered' . PHP_EOL;
 
         fclose($fp); //Close the connection to the server
-        unlink($cert_file); //delete the temp file
+
+        if (!$GLOBALS['environment']=="dev") {
+            unlink($cert_file); //delete the temp file
+        }
     }
 
 }

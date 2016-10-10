@@ -12,6 +12,7 @@ if ($environment == "dev") {
     $dotenv->load();
 }
 
+
 $router = new Router\Router();
 
 /******** GET ********/
