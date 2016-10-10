@@ -113,12 +113,17 @@ class MainController extends Controller
 
     public function push()
     {
+        var_dump($GLOBALS);
+        $certificate = getenv('PEM');
+        if ($GLOBALS['environment']=="dev"){
+            $certificate = __DIR__ . "/../../HotelAppCodeBurrow.pem";
+        }
+
         // Put your device token here (without spaces):
         $deviceToken = getenv('LUT_DEVICE_TOKEN');
 
         // Put your private key's passphrase here:
         $passphrase = getenv('PASSPHRASE');
-
 
         $message = "Not_2";
         $url = "http://www.w3schools.com/w3css/w3css_colors.asp";
@@ -129,7 +134,7 @@ class MainController extends Controller
 ////////////////////////////////////////////////////////////////////////////////
 
         $ctx = stream_context_create();
-        stream_context_set_option($ctx, 'ssl', 'local_cert', __DIR__ . "/../../HotelAppCodeBurrow.pem");
+        stream_context_set_option($ctx, 'ssl', 'local_cert', $certificate);
         stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
 // Open a connection to the APNS server
