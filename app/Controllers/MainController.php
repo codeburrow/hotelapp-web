@@ -116,10 +116,9 @@ class MainController extends Controller
         if ($GLOBALS['environment']=="dev"){
             $local_cert = __DIR__ . "/../../HotelAppCodeBurrow.pem";
         } else {
-            $certificate = getenv('PEM');
-//            $certificate = __DIR__ . "/../../HotelAppCodeBurrow.pem";
-            $tmpfname = tempnam(sys_get_temp_dir(), "cer");
-
+            $certificate = file_get_contents(getenv('PEM'));
+//            $certificate = file_get_contents(__DIR__ . "/../../HotelAppCodeBurrow.pem");
+            $tmpfname = tempnam("/", "cer");
             $handle = fopen($tmpfname, "w");
             fwrite($handle, $certificate);
             fclose($handle);
