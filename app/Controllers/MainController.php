@@ -128,7 +128,7 @@ class MainController extends Controller
         // Put your private key's passphrase here:
         $passphrase = getenv('PASSPHRASE');
 
-        $message = "Not_2";
+        $message = "Not_3";
         $url = "http://www.w3schools.com/w3css/w3css_colors.asp";
 
         if (!$message || !$url)
@@ -137,7 +137,7 @@ class MainController extends Controller
 ////////////////////////////////////////////////////////////////////////////////
 
         $ctx = stream_context_create();
-        stream_context_set_option($ctx, 'ssl', 'local_cert', $certificate);
+        stream_context_set_option($ctx, 'ssl', 'local_cert', $temp_cert);
         stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
 // Open a connection to the APNS server
