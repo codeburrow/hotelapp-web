@@ -118,7 +118,7 @@ class MainController extends Controller
         } else {
             $certificate = getenv('PEM');
 //            $certificate = __DIR__ . "/../../HotelAppCodeBurrow.pem";
-            $tmpfname = tempnam("./", "cer");
+            $tmpfname = tempnam(sys_get_temp_dir(), "cer");
 
             $handle = fopen($tmpfname, "w");
             fwrite($handle, $certificate);
