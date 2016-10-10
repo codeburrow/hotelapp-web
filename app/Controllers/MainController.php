@@ -141,7 +141,7 @@ class MainController extends Controller
 ////////////////////////////////////////////////////////////////////////////////
 
         $ctx = stream_context_create();
-        stream_context_set_option($ctx, 'ssl', 'local_cert', stream_get_meta_data($temp_cert)['uri']);
+        stream_context_set_option($ctx, 'ssl', 'local_cert', $tmpfname);
         stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
 // Open a connection to the APNS server
