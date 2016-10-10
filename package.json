@@ -1,0 +1,31 @@
+{
+    "name": "hotelapp-web",
+    "version": "1.0.0",
+    "description": "Manage your hotel operations and create an intimate relationship with your guests.",
+    "engines": {
+        "node": "4.0.0",
+        "npm": "3.5.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/codeburrow/hotelapp-web"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/codeburrow/hotelapp-web/issues"
+    },
+    "homepage": "https://github.com/codeburrow/hotelapp-web#hotelapp",
+    "dependencies": {
+        "bootstrap": "^3.3.7",
+        "chosen-js": "^1.6.2",
+        "clockpicker": "0.0.7",
+        "gentelella": "https://github.com/puikinsh/gentelella.git",
+        "jquery": "^3.1.1",
+        "jquery-ui": "^1.12.1",
+        "jquery.easing": "^1.4.1",
+        "moment": "^2.15.0"
+    },
+    "devDependencies": {
+    }
+}
