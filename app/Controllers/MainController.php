@@ -137,7 +137,7 @@ class MainController extends Controller
 ////////////////////////////////////////////////////////////////////////////////
 
         $ctx = stream_context_create();
-        stream_context_set_option($ctx, 'ssl', 'local_cert', $temp_cert);
+        stream_context_set_option($ctx, 'ssl', 'local_cert', stream_get_meta_data($temp_cert)['uri']);
         stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
 // Open a connection to the APNS server
@@ -173,7 +173,7 @@ class MainController extends Controller
 
         fclose($fp); //Close the connection to the server
 
-        fclose($temp_cert); //Remove file $temp_cert
+//        fclose($temp_cert); //Remove file $temp_cert
     }
 
 }
