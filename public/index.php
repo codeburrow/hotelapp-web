@@ -9,6 +9,7 @@ use HotelApp\Router;
 $dotenv = new Dotenv\Dotenv(__DIR__ . '/../app/');
 $dotenv->load();
 
+
 $router = new Router\Router();
 
 /******** GET ********/
