@@ -5,3 +5,4 @@
 /vendor/
 /old-judge/
 HotelAppCodeBurrow.pem
+node_modules/
