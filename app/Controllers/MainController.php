@@ -114,18 +114,13 @@ class MainController extends Controller
     public function push()
     {
         if ($GLOBALS['environment']=="dev"){
-            $local_cert = __DIR__ . "/../../HotelAppCodeBurrow.pem";
+            $cert_file = __DIR__ . "/../../HotelAppCodeBurrow.pem";
         } else {
-            //$certificate = file_get_contents(__DIR__ . "/../../HotelAppCodeBurrow.pem");
-            $certificate = getenv("PEM");
-            var_dump(getenv("PEM"));
-            echo "<br><br>";
-            var_dump($certificate);
-            $tmpfname = tempnam("/", "cer");
-            $handle = fopen($tmpfname, "w");
-            fwrite($handle, $certificate);
-            fclose($handle);
-            var_dump($tmpfname);
+            $certificate = getenv("PEM"); //Retrieve the contents of the file
+            $cert_file = tempnam("/", "cer"); //create a temp file
+            $handle = fopen($cert_file, "w"); //open it to write in it
+            fwrite($handle, $certificate); //copy the contents of the cert in the temp file
+            fclose($handle); //close the file
         }
 
         // Put your device token here (without spaces):
@@ -134,7 +129,7 @@ class MainController extends Controller
         // Put your private key's passphrase here:
         $passphrase = getenv('PASSPHRASE');
 
-        $message = "Not_3";
+        $message = "Not_4";
         $url = "http://www.w3schools.com/w3css/w3css_colors.asp";
 
         if (!$message || !$url)
@@ -143,10 +138,10 @@ class MainController extends Controller
 ////////////////////////////////////////////////////////////////////////////////
 
         $ctx = stream_context_create();
-        stream_context_set_option($ctx, 'ssl', 'local_cert', $tmpfname);
+        stream_context_set_option($ctx, 'ssl', 'local_cert', $cert_file);
         stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
-// Open a connection to the APNS server
+        // Open a connection to the APNS server
         $fp = stream_socket_client(
             'ssl://gateway.sandbox.push.apple.com:2195', $err,
             $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
@@ -156,20 +151,20 @@ class MainController extends Controller
 
         echo 'Connected to APNS' . PHP_EOL;
 
-// Create the payload body
+        // Create the payload body
         $body['aps'] = array(
             'alert' => $message,
             'sound' => 'default',
             'link_url' => $url,
         );
 
-// Encode the payload as JSON
+        // Encode the payload as JSON
         $payload = json_encode($body);
 
-// Build the binary notification
+        // Build the binary notification
         $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
 
-// Send it to the server
+        // Send it to the server
         $result = fwrite($fp, $msg, strlen($msg));
 
         if (!$result)
@@ -178,7 +173,7 @@ class MainController extends Controller
             echo 'Message successfully delivered' . PHP_EOL;
 
         fclose($fp); //Close the connection to the server
-        unlink($tmpfname);
+        unlink($cert_file); //delete the temp file
     }
 
 }
