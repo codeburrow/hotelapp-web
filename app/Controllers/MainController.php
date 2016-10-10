@@ -113,7 +113,6 @@ class MainController extends Controller
 
     public function push()
     {
-        var_dump($GLOBALS);
         $certificate = getenv('PEM');
         if ($GLOBALS['environment']=="dev"){
             $certificate = __DIR__ . "/../../HotelAppCodeBurrow.pem";
