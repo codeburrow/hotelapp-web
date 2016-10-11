@@ -10,8 +10,7 @@ namespace HotelApp\Services;
 
 class PushNotifications
 {
-    public $androidAuthKey		= "Android Auth Key Here";
-    public $iosApnsCert			= __DIR__ . "/../../HotelAppCodeBurrow.pem"; //development env
+    public $androidAuthKey = "Android Auth Key Here";
 
     /**
      *  For Android GCM
@@ -64,12 +63,13 @@ class PushNotifications
 
         if ($GLOBALS['environment']=='dev'){
             $ssl_url         		= 'ssl://gateway.sandbox.push.apple.com:2195'; //Development
+            $iosApnsCert = __DIR__ . "/../../HotelAppCodeBurrow.pem"; //development env
         } else {
             $ssl_url				= 'ssl://gateway.push.apple.com:2195'; //Production
 
             $certificate = getenv("PEM"); //Retrieve the contents of the file
-            $this->iosApnsCert = tempnam("/", "cer"); //create a temp file
-            $handle = fopen($this->iosApnsCert, "w"); //open it to write in it
+            $iosApnsCert = tempnam("/", "cer"); //create a temp file
+            $handle = fopen($iosApnsCert, "w"); //open it to write in it
             fwrite($handle, $certificate); //copy the contents of the cert in the temp file
             fclose($handle); //close the file
         }
@@ -95,7 +95,7 @@ class PushNotifications
 
         //Create stream context for Push Sever.
         $streamContext = stream_context_create();
-        stream_context_set_option($streamContext, 'ssl', 'local_cert', $this->iosApnsCert);
+        stream_context_set_option($streamContext, 'ssl', 'local_cert', $iosApnsCert);
         stream_context_set_option($streamContext, 'ssl', 'passphrase', getenv('PASSPHRASE'));
 
         $apns = stream_socket_client($ssl_url, $error, $errorString, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $streamContext);
@@ -114,7 +114,7 @@ class PushNotifications
         fclose($apns);
 
         if ($GLOBALS['environment']=="prod") {
-            unlink($this->iosApnsCert); //delete the temp file
+            unlink($iosApnsCert); //delete the temp file
         }
 
         if (!$writeResult) {
