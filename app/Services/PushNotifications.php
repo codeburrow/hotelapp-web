@@ -54,7 +54,6 @@ class PushNotifications
 
     }
 
-
     /**
      * For IOS APNS
      * $params["msg"] : Expected Message For APNS
@@ -148,6 +147,10 @@ class PushNotifications
                     $this->sendMessageAndroid($params["registration_id"], $params);
                     break;
             }
+        } else {
+            $rtn["code"]	= "003";
+            $rtn["msg"]		= "No device token or message set.".PHP_EOL;
+            return $rtn;
         }
 
     }
