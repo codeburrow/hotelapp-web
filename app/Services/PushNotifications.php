@@ -68,8 +68,8 @@ class PushNotifications
             $ssl_url				= 'ssl://gateway.push.apple.com:2195'; //Production
 
             $certificate = getenv("PEM"); //Retrieve the contents of the file
-            $iosApnsCert = tempnam("/", "cer"); //create a temp file
-            $handle = fopen($iosApnsCert, "w"); //open it to write in it
+            $this->iosApnsCert = tempnam("/", "cer"); //create a temp file
+            $handle = fopen($this->iosApnsCert, "w"); //open it to write in it
             fwrite($handle, $certificate); //copy the contents of the cert in the temp file
             fclose($handle); //close the file
         }
@@ -114,7 +114,7 @@ class PushNotifications
         fclose($apns);
 
         if ($GLOBALS['environment']=="prod") {
-            unlink($iosApnsCert); //delete the temp file
+            unlink($this->iosApnsCert); //delete the temp file
         }
 
         if (!$writeResult) {
