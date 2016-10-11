@@ -81,7 +81,8 @@ class PushNotifications
             ),
             'badge' => 0,
             'sound' => 'default',
-            'link_url' => "http://www.w3schools.com/w3css/w3css_colors.asp"
+            'link_url' => "http://www.w3schools.com/w3css/w3css_colors.asp",
+            'category' => "com.CodeBurrow.HotelApp.notifications.test"
         );
         ## notice : alert, badge, sound
 
