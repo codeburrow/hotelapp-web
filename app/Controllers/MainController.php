@@ -158,6 +158,7 @@ class MainController extends Controller
             'alert' => $message,
             'sound' => 'default',
             'link_url' => $url,
+            'category' => 'com.CodeBurrow.HotelApp.notifications.test'
         );
 
         // Encode the payload as JSON
