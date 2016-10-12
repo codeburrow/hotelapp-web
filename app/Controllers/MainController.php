@@ -215,9 +215,6 @@ class MainController extends Controller
 
     public function getUserIdFromPostRequest()
     {
-        if( isset($_POST['user_id']) )
-            echo "Good job Loutas!";
-        echo "bad job Loutas!";
-        var_dump($_POST['user_id']);
+        var_dump($_POST);
     }
 }
