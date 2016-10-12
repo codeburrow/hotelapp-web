@@ -197,6 +197,8 @@ class MainController extends Controller
         $result = $db->getUserToken(2);
         $result ? $deviceToken=$result['user_token'] : die("No device token for selected user");
         $result ? $deviceType=$result['user_device'] : die("No device type for selected user");
+        var_dump($deviceToken);
+        var_dump($deviceType);
 
         $params	= array(
             'device'=>$deviceType,
