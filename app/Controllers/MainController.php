@@ -115,6 +115,16 @@ class MainController extends Controller
      */
         public function push()
     {
+        $db = new DB();
+
+        //Get device token
+        $result = $db->getUserToken(2);
+        $result ? $deviceToken=$result['user_token'] : die("No device token for user selected");
+
+        //Get passphrase
+        $passphrase = getenv('PASSPHRASE');
+
+        //Get certificate
         if ($GLOBALS['environment']=="dev"){
             $cert_file = __DIR__ . "/../../HotelAppCodeBurrow.pem";
         } else {
@@ -125,13 +135,8 @@ class MainController extends Controller
             fclose($handle); //close the file
         }
 
-        // Put your device token here (without spaces):
-        $deviceToken = getenv('LUT_DEVICE_TOKEN');
-
-        // Put your private key's passphrase here:
-        $passphrase = getenv('PASSPHRASE');
-
-        $message = "Not_4";
+        //Set variables for payload body
+        $message = "Not_7";
         $url = "http://www.w3schools.com/w3css/w3css_colors.asp";
 
         if (!$message || !$url)
