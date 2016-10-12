@@ -215,6 +215,6 @@ class MainController extends Controller
 
     public function getUserIdFromPostRequest()
     {
-        echo json_decode($_POST['user_id']);
+        echo json_decode(file_get_contents('php://input'));
     }
 }
