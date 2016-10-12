@@ -217,6 +217,7 @@ class MainController extends Controller
     {
         if( isset($_POST['user_id']) )
             echo "Good job Loutas!";
-            echo "bad job Loutas!";
+        echo "bad job Loutas!";
+        var_dump($_POST['user_id']);
     }
 }
