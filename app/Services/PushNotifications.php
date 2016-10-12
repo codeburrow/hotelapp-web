@@ -64,7 +64,8 @@ class PushNotifications
             $ssl_url         		= 'ssl://gateway.sandbox.push.apple.com:2195';
             $iosApnsCert = __DIR__ . "/../../HotelAppCodeBurrow.pem";
         } else { //Production
-            $ssl_url				= 'ssl://gateway.push.apple.com:2195';
+//            $ssl_url				= 'ssl://gateway.push.apple.com:2195';
+            $ssl_url         		= 'ssl://gateway.sandbox.push.apple.com:2195'; //Use this for time being
 
             $certificate = getenv("PEM"); //Retrieve the contents of the file
             $iosApnsCert = tempnam("/", "cer"); //create a temp file
