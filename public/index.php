@@ -35,6 +35,7 @@ $router->get('/admin/logout', 'AdminController', 'logout');
 //Public
 $router->post('/login', 'MainController', 'postlogin');
 $router->post('/register', 'MainController', 'postRegister');
+$router->post('/getUserIdFromPostRequest', 'MainController', 'getUserIdFromPostRequest');
 
 //Admin
 $router->post('/admin/login', 'AdminController', 'postLogin');

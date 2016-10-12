@@ -113,80 +113,80 @@ class MainController extends Controller
     /**
      * Code used for previous push notfs
      */
-        public function xPush()
-    {
-        $db = new DB();
-
-        //Get device token
-        $result = $db->getUserToken(2);
-        $result ? $deviceToken=$result['user_token'] : die("No device token for user selected");
-
-        //Get passphrase
-        $passphrase = getenv('PASSPHRASE');
-
-        //Get certificate
-        if ($GLOBALS['environment']=="dev"){
-            $cert_file = __DIR__ . "/../../HotelAppCodeBurrow.pem";
-        } else {
-            $certificate = getenv("PEM"); //Retrieve the contents of the file
-            $cert_file = tempnam("/", "cer"); //create a temp file
-            $handle = fopen($cert_file, "w"); //open it to write in it
-            fwrite($handle, $certificate); //copy the contents of the cert in the temp file
-            fclose($handle); //close the file
-        }
-
-        //Set variables for payload body
-        $message = "Not_7";
-        $url = "http://www.w3schools.com/w3css/w3css_colors.asp";
-
-        if (!$message || !$url)
-            exit('Example Usage: $php newspush.php \'Breaking News!\' \'https://raywenderlich.com\'' . "\n");
-
-        ////////////////////////////////////////////////////////////////////////////////
-
-        $ctx = stream_context_create();
-        stream_context_set_option($ctx, 'ssl', 'local_cert', $cert_file);
-        stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
-
-        // Open a connection to the APNS server
-        $fp = stream_socket_client(
-            'ssl://gateway.sandbox.push.apple.com:2195', $err,
-            $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
-
-        if (!$fp)
-            exit("Failed to connect: $err $errstr" . PHP_EOL);
-
-        echo 'Connected to APNS' . PHP_EOL;
-
-        // Create the payload body
-        $body['aps'] = array(
-            'alert' => $message,
-            'badge' => 1,
-            'sound' => 'default',
-            'link_url' => $url,
-            'category' => 'com.CodeBurrow.HotelApp.notifications.test'
-        );
-
-        // Encode the payload as JSON
-        $payload = json_encode($body);
-
-        // Build the binary notification
-        $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
-
-        // Send it to the server
-        $result = fwrite($fp, $msg, strlen($msg));
-
-        if (!$result)
-            echo 'Message not delivered' . PHP_EOL;
-        else
-            echo 'Message successfully delivered' . PHP_EOL;
-
-        fclose($fp); //Close the connection to the server
-
-        if ($GLOBALS['environment']=="prod") {
-            unlink($cert_file); //delete the temp file
-        }
-    }
+//        public function xPush()
+//    {
+//        $db = new DB();
+//
+//        //Get device token
+//        $result = $db->getUserToken(2);
+//        $result ? $deviceToken=$result['user_token'] : die("No device token for user selected");
+//
+//        //Get passphrase
+//        $passphrase = getenv('PASSPHRASE');
+//
+//        //Get certificate
+//        if ($GLOBALS['environment']=="dev"){
+//            $cert_file = __DIR__ . "/../../HotelAppCodeBurrow.pem";
+//        } else {
+//            $certificate = getenv("PEM"); //Retrieve the contents of the file
+//            $cert_file = tempnam("/", "cer"); //create a temp file
+//            $handle = fopen($cert_file, "w"); //open it to write in it
+//            fwrite($handle, $certificate); //copy the contents of the cert in the temp file
+//            fclose($handle); //close the file
+//        }
+//
+//        //Set variables for payload body
+//        $message = "Not_7";
+//        $url = "http://www.w3schools.com/w3css/w3css_colors.asp";
+//
+//        if (!$message || !$url)
+//            exit('Example Usage: $php newspush.php \'Breaking News!\' \'https://raywenderlich.com\'' . "\n");
+//
+//        ////////////////////////////////////////////////////////////////////////////////
+//
+//        $ctx = stream_context_create();
+//        stream_context_set_option($ctx, 'ssl', 'local_cert', $cert_file);
+//        stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+//
+//        // Open a connection to the APNS server
+//        $fp = stream_socket_client(
+//            'ssl://gateway.sandbox.push.apple.com:2195', $err,
+//            $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+//
+//        if (!$fp)
+//            exit("Failed to connect: $err $errstr" . PHP_EOL);
+//
+//        echo 'Connected to APNS' . PHP_EOL;
+//
+//        // Create the payload body
+//        $body['aps'] = array(
+//            'alert' => $message,
+//            'badge' => 1,
+//            'sound' => 'default',
+//            'link_url' => $url,
+//            'category' => 'com.CodeBurrow.HotelApp.notifications.test'
+//        );
+//
+//        // Encode the payload as JSON
+//        $payload = json_encode($body);
+//
+//        // Build the binary notification
+//        $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
+//
+//        // Send it to the server
+//        $result = fwrite($fp, $msg, strlen($msg));
+//
+//        if (!$result)
+//            echo 'Message not delivered' . PHP_EOL;
+//        else
+//            echo 'Message successfully delivered' . PHP_EOL;
+//
+//        fclose($fp); //Close the connection to the server
+//
+//        if ($GLOBALS['environment']=="prod") {
+//            unlink($cert_file); //delete the temp file
+//        }
+//    }
 
     public function push()
     {
@@ -213,4 +213,8 @@ class MainController extends Controller
         echo $rtn['msg'];
     }
 
+    public function getUserIdFromPostRequest()
+    {
+        if( isset($_POST['user_id']) ) echo "Good job Loutas!";
+    }
 }
