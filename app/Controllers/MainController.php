@@ -137,7 +137,7 @@ class MainController extends Controller
         if (!$message || !$url)
             exit('Example Usage: $php newspush.php \'Breaking News!\' \'https://raywenderlich.com\'' . "\n");
 
-////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
         $ctx = stream_context_create();
         stream_context_set_option($ctx, 'ssl', 'local_cert', $cert_file);
@@ -177,7 +177,7 @@ class MainController extends Controller
 
         fclose($fp); //Close the connection to the server
 
-        if (!$GLOBALS['environment']=="dev") {
+        if ($GLOBALS['environment']=="prod") {
             unlink($cert_file); //delete the temp file
         }
     }
