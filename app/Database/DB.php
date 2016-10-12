@@ -14,20 +14,23 @@ class DB
     protected $conn;
 
     /**
-     * DB constructor. By default connect to DEREE's DB (MySQL) and to the 'INSERT DB HERE' database schema.
+     * DB constructor. Connect to Heroku's DB (ClearDB).
      */
-//    public function __construct()
-//    {
-//        $this->host = getenv('HOST');
-//        $this->port = getenv('PORT');
-//        $this->dbname = getenv('DBNAME');
-//        $this->username = getenv('USERNAME');
-//        $this->password = getenv('PASSWORD');
-//
-//        $this->options = [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'];
-//
-//        $this->connect();
-//    }
+    public function __construct()
+    {
+        $cleardb_url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+
+        $this->host = $cleardb_url["host"];;
+        $this->port = 3306;
+        $this->dbname = substr($cleardb_url["path"], 1);
+        $this->username = $cleardb_url["user"];
+        $this->password = $cleardb_url["pass"];
+
+        $this->options = [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'];
+
+        $this->connect();
+    }
+
 
     /**
      * Alternative DB constructor for connection to the Homestead virtual DB server
@@ -37,18 +40,18 @@ class DB
      * @param string $username
      * @param string $password
      */
-    public function __construct($servername = "127.0.0.1", $port = "33060", $dbname = "hotelapp_web", $username = "homestead", $password = "secret")
-    {
-        $this->host = $servername;
-        $this->port = $port;
-        $this->dbname = $dbname;
-        $this->username = $username;
-        $this->password = $password;
-
-        $this->options = [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'];
-
-        $this->connect();
-    }
+//    public function __construct($servername = "127.0.0.1", $port = "33060", $dbname = "hotelapp_web", $username = "homestead", $password = "secret")
+//    {
+//        $this->host = $servername;
+//        $this->port = $port;
+//        $this->dbname = $dbname;
+//        $this->username = $username;
+//        $this->password = $password;
+//
+//        $this->options = [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'];
+//
+//        $this->connect();
+//    }
 
     public function connect()
     {
