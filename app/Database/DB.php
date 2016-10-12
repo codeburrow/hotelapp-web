@@ -109,7 +109,7 @@ VALUES (:userEmail, :userPassword)");
 
     public function getUserToken($userId)
     {
-        $stmt = $this->conn->prepare("SELECT user_token FROM $this->dbname.user WHERE user_id=:user_id;");
+        $stmt = $this->conn->prepare("SELECT user_device, user_token FROM $this->dbname.user WHERE user_id=:user_id;");
         $stmt->bindParam(':user_id', $userId);
         $stmt->execute();
 

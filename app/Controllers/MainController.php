@@ -113,7 +113,7 @@ class MainController extends Controller
     /**
      * Code used for previous push notfs
      */
-        public function push()
+        public function xPush()
     {
         $db = new DB();
 
@@ -161,6 +161,7 @@ class MainController extends Controller
         // Create the payload body
         $body['aps'] = array(
             'alert' => $message,
+            'badge' => 1,
             'sound' => 'default',
             'link_url' => $url,
             'category' => 'com.CodeBurrow.HotelApp.notifications.test'
@@ -187,14 +188,24 @@ class MainController extends Controller
         }
     }
 
-    public function xpush()
+    public function push()
     {
         $push = new PushNotifications();
+        $db = new DB();
+
+        //Get device token
+        $result = $db->getUserToken(2);
+        $result ? $deviceToken=$result['user_token'] : die("No device token for selected user");
+        $result ? $deviceType=$result['user_device'] : die("No device type for selected user");
 
         $params	= array(
-            "pushtype"=>"ios",
-            "registration_id"=>getenv('LUT_DEVICE_TOKEN'),
-            "msg"=>"Not_6"
+            'device'=>$deviceType,
+            'token'=>$deviceToken,
+            'msg'=>'Not_8',
+            'category' => 'com.CodeBurrow.HotelApp.notifications.test',
+            'badge' => 1,
+            'sound' => 'default',
+            'link_url' => 'http://www.w3schools.com/w3css/w3css_colors.asp',
         );
 
         $rtn = $push->sendMessage($params);

@@ -58,13 +58,13 @@ class PushNotifications
      * For IOS APNS
      * $params["msg"] : Expected Message For APNS
      */
-    private function sendMessageIos($registration_id, $params) {
+    private function sendMessageIos($params) {
 
-        if ($GLOBALS['environment']=='dev'){
-            $ssl_url         		= 'ssl://gateway.sandbox.push.apple.com:2195'; //Development
-            $iosApnsCert = __DIR__ . "/../../HotelAppCodeBurrow.pem"; //development env
-        } else {
-            $ssl_url				= 'ssl://gateway.push.apple.com:2195'; //Production
+        if ($GLOBALS['environment']=='dev'){ //Development
+            $ssl_url         		= 'ssl://gateway.sandbox.push.apple.com:2195';
+            $iosApnsCert = __DIR__ . "/../../HotelAppCodeBurrow.pem";
+        } else { //Production
+            $ssl_url				= 'ssl://gateway.push.apple.com:2195';
 
             $certificate = getenv("PEM"); //Retrieve the contents of the file
             $iosApnsCert = tempnam("/", "cer"); //create a temp file
@@ -73,22 +73,24 @@ class PushNotifications
             fclose($handle); //close the file
         }
 
+        //Create payload basic info
         $payload = array();
         $payload['aps'] = array(
             'alert' => array(
                 "body"=>$params["msg"],
                 "action-loc-key"=>"View"
             ),
-            'badge' => 0,
-            'sound' => 'default',
-            'link_url' => "http://www.w3schools.com/w3css/w3css_colors.asp"
+            'badge' => $params['badge'],
+            'sound' => $params['sound'],
+            'link_url' => $params['link_url'],
+            'category' => $params['category'],
         );
-        ## notice : alert, badge, sound
 
-
-        ## $payload['extra_info'] is different from what your app is programmed, this extra_info transfer to your IOS App
+        //Create payload extra info
+        //$payload['extra_info'] is different from what your app is programmed, this extra_info transfer to your IOS App
         $payload['extra_info'] = array(
-            'apns_msg' => $params["msg"]
+            'apns_msg' => $params["msg"],
+            'category' => $params['category'],
         );
         $push = json_encode($payload);
 
@@ -105,9 +107,9 @@ class PushNotifications
         }
 
         //echo 'error=' . $error;
-        $t_registration_id = str_replace('%20', '', $registration_id);
-        $t_registration_id = str_replace(' ', '', $t_registration_id);
-        $apnsMessage = chr(0) . pack('n', 32) . pack('H*', $t_registration_id) . pack('n', strlen($push)) . $push;
+        $params['token'] = str_replace('%20', '', $params['token']);
+        $params['token'] = str_replace(' ', '', $params['token']);
+        $apnsMessage = chr(0) . pack('n', 32) . pack('H*', $params['token']) . pack('n', strlen($push)) . $push;
 
         $writeResult = fwrite($apns, $apnsMessage);
         fclose($apns);
@@ -126,7 +128,7 @@ class PushNotifications
 
         return $rtn;
 
-    }//private function sendMessageIos($registration_id, $msg, $link, $type) {
+    }//sendMessageIos()
 
 
 
@@ -137,11 +139,10 @@ class PushNotifications
     //ToDO: Implement with array variable??
     public function sendMessage($params){
 
-        //$parm	= array("msg"=>$params["msg"]);
-        if($params["registration_id"] && $params["msg"]){
-            switch($params["pushtype"]){
+        if($params["token"] && $params["msg"]){
+            switch($params["device"]){
                 case "ios":
-                    return $rtn = $this->sendMessageIos($params["registration_id"], $params);
+                    return $rtn = $this->sendMessageIos($params);
                     break;
                 case "android":
                     $this->sendMessageAndroid($params["registration_id"], $params);
