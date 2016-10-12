@@ -31,7 +31,6 @@ class DB
         $this->connect();
     }
 
-
     /**
      * Alternative DB constructor for connection to the Homestead virtual DB server
      * @param string $servername
