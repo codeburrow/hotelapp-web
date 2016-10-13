@@ -122,4 +122,17 @@ VALUES (:userEmail, :userPassword)");
         return $result;
     }
 
+    public function setUserToken($userId, $userToken)
+    {
+        $stmt = $this->conn->prepare("UPDATE $this->dbname.user SET user_token = ?  WHERE user_id= ? ;");
+
+        try{
+        $stmt->bindParam(1, $userToken);
+        $stmt->bindParam(2, $userId);
+        $stmt->execute();
+
+        } catch (Exception $e) {
+        }
+    }
+
 }
