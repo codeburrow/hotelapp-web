@@ -127,10 +127,10 @@ VALUES (:userEmail, :userPassword)");
         $stmt = $this->conn->prepare("UPDATE $this->dbname.user SET user_token=:user_token WHERE user_id=:user_id;");
 
         try {
-            $stmt->bindParam(1, $userToken);
-            $stmt->bindParam(2, $userId);
+            $stmt->bindParam(':user_token', $userToken, PDO::PARAM_STR, 70);
+            $stmt->bindValue(':user_id', "sdf", PDO::PARAM_INT);
             $result['success'] = $stmt->execute();
-            $result['message'] = "Successfully updated user_toke for user_id " . $userId;
+            $result['message'] = "Successfully updated user_token for user_id " . $userId;
 
         } catch (PDOException $e) {
             $result['success'] = false;
