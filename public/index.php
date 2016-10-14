@@ -5,7 +5,7 @@ require_once __DIR__ . '/../app/setup.php';
 use HotelApp\Controllers;
 use HotelApp\Router;
 
-$environment = "prod";
+$environment = "dev";
 if ($environment == "dev") {
     /** Load .env variables in development environment **/
     $dotenv = new Dotenv\Dotenv(__DIR__ . '/../app/');

@@ -229,6 +229,6 @@ class MainController extends Controller
 
         $result = $db->setUserToken($post['user_id'], $post['user_token']);
 
-        echo $result['message'];
+        echo json_encode($result);
     }
 }
