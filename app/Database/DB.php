@@ -122,9 +122,9 @@ VALUES (:userEmail, :userPassword)");
         return $result;
     }
 
-    public function setUserToken($userId, $userToken)
+    public function setUserToken(int $userId, String $userToken)
     {
-        if ( is_numeric($userId) ) {
+//        if ( is_numeric($userId) ) {
             $stmt = $this->conn->prepare("UPDATE $this->dbname.user SET user_token=:user_token WHERE user_id=:user_id;");
 
             try {
@@ -137,10 +137,10 @@ VALUES (:userEmail, :userPassword)");
                 $result['success'] = false;
                 $result['message'] = "Failed to update user_token with error: " . $e->getMessage();
             }
-        } else {
-            $result['success'] = false;
-            $result['message'] = 'The $userId variable is not numeric';
-        }
+//        } else {
+//            $result['success'] = false;
+//            $result['message'] = 'The $userId variable is not numeric';
+//        }
 
         return $result;
     }
