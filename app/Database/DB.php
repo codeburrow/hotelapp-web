@@ -124,17 +124,22 @@ VALUES (:userEmail, :userPassword)");
 
     public function setUserToken($userId, $userToken)
     {
-        $stmt = $this->conn->prepare("UPDATE $this->dbname.user SET user_token=:user_token WHERE user_id=:user_id;");
+        if ( is_numeric($userId) ) {
+            $stmt = $this->conn->prepare("UPDATE $this->dbname.user SET user_token=:user_token WHERE user_id=:user_id;");
 
-        try {
-            $stmt->bindParam(':user_token', $userToken, PDO::PARAM_STR, 70);
-            $stmt->bindValue(':user_id', "sdf", PDO::PARAM_INT);
-            $result['success'] = $stmt->execute();
-            $result['message'] = "Successfully updated user_token for user_id " . $userId;
+            try {
+                $stmt->bindParam(':user_token', $userToken, PDO::PARAM_STR, 70);
+                $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+                $result['success'] = $stmt->execute();
+                $result['message'] = "Successfully updated user_token for user_id " . $userId;
 
-        } catch (PDOException $e) {
+            } catch (PDOException $e) {
+                $result['success'] = false;
+                $result['message'] = "Failed to update user_token with error: " . $e->getMessage();
+            }
+        } else {
             $result['success'] = false;
-            $result['message'] = "Failed to update user_token with error: " . $e->getMessage();
+            $result['message'] = 'The $userId variable is not numeric';
         }
 
         return $result;
