@@ -221,4 +221,12 @@ class MainController extends Controller
             echo $key.': '.$value;
         }
     }
+
+    public function updateUserToken()
+    {
+        $db = new DB();
+        $post = json_decode(file_get_contents('php://input'), true);
+
+        $db->setUserToken($post['user_id'], $post['user_token']);
+    }
 }

@@ -124,15 +124,20 @@ VALUES (:userEmail, :userPassword)");
 
     public function setUserToken($userId, $userToken)
     {
-        $stmt = $this->conn->prepare("UPDATE $this->dbname.user SET user_token = ?  WHERE user_id= ? ;");
+        $stmt = $this->conn->prepare("UPDATE $this->dbname.user SET user_token=:user_token WHERE user_id=:user_id;");
 
-        try{
-        $stmt->bindParam(1, $userToken);
-        $stmt->bindParam(2, $userId);
-        $stmt->execute();
+        try {
+            $stmt->bindParam(1, $userToken);
+            $stmt->bindParam(2, $userId);
+            $result['success'] = $stmt->execute();
+            $result['message'] = "Successfully updated user_toke for user_id " . $userId;
 
-        } catch (Exception $e) {
+        } catch (PDOException $e) {
+            $result['success'] = false;
+            $result['message'] = "Failed to update user_token with error: " . $e->getMessage();
         }
+
+        return $result;
     }
 
 }
