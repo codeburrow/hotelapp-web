@@ -23,6 +23,8 @@ $router->get('/logout', 'MainController', 'logout');
 $router->get('/register', 'MainController', 'register');
 $router->get('/contact', 'MainController', 'contact');
 $router->get('/about', 'MainController', 'about');
+
+//API
 $router->get('/push', 'MainController', 'push');
 
 //Admin
@@ -36,6 +38,9 @@ $router->get('/admin/logout', 'AdminController', 'logout');
 $router->post('/login', 'MainController', 'postlogin');
 $router->post('/register', 'MainController', 'postRegister');
 $router->post('/getUserIdFromPostRequest', 'MainController', 'getUserIdFromPostRequest');
+
+//API
+$router->post('/updateUserToken', 'MainController', 'updateUserToken');
 
 //Admin
 $router->post('/admin/login', 'AdminController', 'postLogin');
