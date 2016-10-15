@@ -6,3 +6,4 @@
 /old-judge/
 HotelAppCodeBurrow.pem
 node_modules/
+.DS_Store
