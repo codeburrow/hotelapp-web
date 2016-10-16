@@ -206,6 +206,7 @@ class MainController extends Controller
             'badge' => 1,
             'sound' => 'default',
             'link_url' => 'http://www.w3schools.com/w3css/w3css_colors.asp',
+            'mutable-content' => 1,
         );
 
         $rtn = $push->sendMessage($params);
