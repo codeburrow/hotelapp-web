@@ -8,7 +8,6 @@ use HotelApp\Router;
 /** Load .env variables in development environment **/
 $dotenv = new Dotenv\Dotenv(__DIR__ . '/../app/');
 $dotenv->load();
-$dotenv->required('ENVIRONMENT');
 $environment = getenv('ENVIRONMENT');
 
 $router = new Router\Router();
