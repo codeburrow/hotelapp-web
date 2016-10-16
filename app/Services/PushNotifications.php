@@ -85,9 +85,15 @@ class PushNotifications
             'sound' => $params['sound'],
             'link_url' => $params['link_url'],
             'category' => $params['category'],
-            'mutable-content' => 1,
-            'content-available' => 1
         );
+
+        if ( isset($params['mutable_content']) ) {
+            $payload['aps']['mutable_content'] = 1;
+        }
+
+        if ( isset($params['content_available']) ) {
+            $payload['aps']['content_available'] = 1;
+        }
 
         //Create payload extra info
         //$payload['extra_info'] is different from what your app is programmed, this extra_info transfer to your IOS App

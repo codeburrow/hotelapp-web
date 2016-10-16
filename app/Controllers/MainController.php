@@ -201,14 +201,20 @@ class MainController extends Controller
         $params	= array(
             'device'=>$deviceType,
             'token'=>$deviceToken,
-            'msg'=>'Not_8',
+            'msg'=>'Not_9',
             'category' => 'com.CodeBurrow.HotelApp.notifications.test',
-            'badge' => 1,
+            'badge' => 358,
             'sound' => 'default',
-            'link_url' => 'http://www.w3schools.com/w3css/w3css_colors.asp',
-            'mutable-content' => 1,
-            'content-available' => 1
+            'link_url' => 'http://hdimagesnew.com/wp-content/uploads/2015/11/cute-dolls-pics-10.jpg',
         );
+
+        if ( isset($_GET['mutable_content']) ) {
+            $params['mutable_content'] = 1;
+        }
+
+        if ( isset($_GET['content_available']) ) {
+            $params['content_available'] = 1;
+        }
 
         $rtn = $push->sendMessage($params);
 
