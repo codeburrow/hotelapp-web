@@ -5,12 +5,15 @@ require_once __DIR__ . '/../app/setup.php';
 use HotelApp\Controllers;
 use HotelApp\Router;
 
-$a='prod';
-if ($a=='dev') {
+try {
     /** Load .env variables in development environment **/
     $dotenv = new Dotenv\Dotenv(__DIR__ . '/../app/');
     $dotenv->load();
+    $dotenv->required('ENVIRONMENT');
+} catch (Exception $e) {
+    // catch exception -- means it's on production no env.
 }
+
 $environment = getenv('ENVIRONMENT');
 
 $router = new Router\Router();
