@@ -208,12 +208,12 @@ class MainController extends Controller
             'link_url' => 'http://hdimagesnew.com/wp-content/uploads/2015/11/cute-dolls-pics-10.jpg',
         );
 
-        if ( isset($_GET['mutable_content']) ) {
-            $params['mutable_content'] = 1;
+        if ( isset($_GET['mutable-content']) ) {
+            $params['mutable-content'] = 1;
         }
 
-        if ( isset($_GET['content_available']) ) {
-            $params['content_available'] = 1;
+        if ( isset($_GET['content-available']) ) {
+            $params['content-available'] = 1;
         }
 
         $rtn = $push->sendMessage($params);

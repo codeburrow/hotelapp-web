@@ -87,12 +87,12 @@ class PushNotifications
             'category' => $params['category'],
         );
 
-        if ( isset($params['mutable_content']) ) {
-            $payload['aps']['mutable_content'] = 1;
+        if ( isset($params['mutable-content']) ) {
+            $payload['aps']['mutable-content'] = 1;
         }
 
-        if ( isset($params['content_available']) ) {
-            $payload['aps']['content_available'] = 1;
+        if ( isset($params['content-available']) ) {
+            $payload['aps']['content-available'] = 1;
         }
 
         //Create payload extra info
