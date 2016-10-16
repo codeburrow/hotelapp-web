@@ -207,20 +207,12 @@ class MainController extends Controller
             'sound' => 'default',
             'link_url' => 'http://www.w3schools.com/w3css/w3css_colors.asp',
             'mutable-content' => 1,
+            'content-available' => 1
         );
 
         $rtn = $push->sendMessage($params);
 
         echo $rtn['msg'];
-    }
-
-    public function getUserIdFromPostRequest()
-    {
-        $post = json_decode(file_get_contents('php://input'), true);
-
-        foreach($post as $key=>$value) {
-            echo $key.': '.$value;
-        }
     }
 
     public function updateUserToken()

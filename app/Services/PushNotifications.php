@@ -85,6 +85,8 @@ class PushNotifications
             'sound' => $params['sound'],
             'link_url' => $params['link_url'],
             'category' => $params['category'],
+            'mutable-content' => 1,
+            'content-available' => 1
         );
 
         //Create payload extra info
